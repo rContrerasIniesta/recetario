@@ -1,0 +1,17 @@
+label {
+  background: none repeat scroll 0 0 #F3F3F3;
+  display: block;
+  float: left;
+  font-size: 13px;
+  font-weight: bold;
+  height: 24px;
+  margin: 0 10px 0 0;
+  padding: 3px 7px;
+  width: 150px;
+}
+
+select {
+  height: 21px;
+  padding: 1px;
+  width: 173px;
+}

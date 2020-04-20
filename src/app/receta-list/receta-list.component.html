@@ -1,0 +1,11 @@
+<ul class="recetas">
+  <h3>Lista de recetas</h3>
+  <app-receta-detail *ngFor="let receta of listaRecetas, index as i" [num]="i+1" [receta]="receta" (selectedReceta)="selected($event)"></app-receta-detail>
+</ul>
+
+<ul>
+  <h3>Lista de recetas favoritas</h3>
+  <app-receta-detail *ngFor="let recetaFav of listaRecetasFav, index as i" [num]="i+1" [receta]="recetaFav" (selectedReceta)="selected($event)"></app-receta-detail>
+</ul>
+
+<button [routerLink]="['/nuevaReceta']">Nueva receta</button>
