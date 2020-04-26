@@ -1,10 +1,64 @@
-<h1>Detalle de la receta {{receta.nombre}}</h1>
-<p><label>Nombre:</label>{{receta.nombre}}
-<p><label>Comensales:</label> {{receta.comensales}}
-<p><label>Pasos:</label> {{receta.pasos}}
-<p><label>Alergenos:</label> {{receta.alergenos}}
-<p><label>Imagen: </label>{{receta.imagen}}
-<p><label>Ingredientes: </label> </p>
-<app-receta-ingrediente  [(ingrediente)]="receta.ingredientes"></app-receta-ingrediente>
+<h1>Detalle de la receta {{receta.nombre}} <i *ngIf="receta.favorito" class="fas fa-star"></i> </h1>
+<div class="row">
+    <div class="col-lg-auto">
+        <label>Nombre:</label>
+    </div>
+    <div class="col-lg-auto">
+        {{receta.nombre}}
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-lg-auto">
+        <label class="label">Comensales:</label>
+    </div>
+    <div class="col">
+        {{receta.comensales}}
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-lg-auto">
+        <label>Pasos:</label>
+    </div>
+    <div class="col">
+        {{receta.pasos}}
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-lg-auto">
+        <label>Alergenos:</label>
+    </div>
+    <div class="col">
+        {{receta.alergenos}}
+    </div>
+</div>
+<br>
+<h3>Lista de ingredientes</h3>
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Nombre ingrediente</th>
+                            <th>Cantidad</th>
+                            <th>Unidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let receta of receta.ingredientes">
+                            <td> {{ receta.nombre }} </td>
+                            <td> {{ receta.unidad }} </td>
+                            <td> {{ receta.cantidad }} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-<button [routerLink]="['/recetas']">Volver</button>
+<button class="btn btn-outline-primary" [routerLink]="['/recetas']">Volver</button>

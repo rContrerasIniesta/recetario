@@ -2,50 +2,86 @@
 <p>Introduce una nueva receta:</p>
 
 <form [formGroup]="form">
-  <p *ngIf="error" style="color: red"> Debes rellenar correctamente el formulario</p>
-  <div class="form-group">
-   <p><label for="nombre">Nombre: </label></p>
-   <input id="nombre" type="text" formControlName="nombre">
-  <br/>
-  <p><label for="comensales">Comensales: </label></p>
-  <input id="comensales" type="number" formControlName="comensales">
-  <br/>
-  <p><label for="pasos">Pasos: </label></p>
-  <input id="pasos" type="text" formControlName="pasos">
-  <br/>
-  <p><label for="alergenos">Alergenos: </label></p>
-  <select placeholder="alergenos" formControlName="alergenos">
-    <option *ngFor="let alergeno of alergenos" [ngValue]="alergeno.name">
-       {{ alergeno.displayName }}
-    </option>
-   </select>
-  <br/>
-  <p><label for="imagen">Imagen: </label></p>
-  <input id="imagen" type="text" formControlName="imagen">
-  <br/>
-  <p><label for="favorito">Favorito: </label></p>
-  <input id="favorito" type="checkbox" formControlName="favorito">
-  <br/>
-  <p><label for="ingredientes">Ingredientes: </label></p>
-  <br/>
-  <br/>
-  <button (click)="addIngrediente()">+</button>
-  <div formArrayName="ingredientes" *ngFor="let ingrediente of form.controls.ingredientes.value; let i = index">
-    <form formGroupName='{{i}}'>
-      <input placeholder="nombre" type="text" formControlName="nombre">
-      <input placeholder="cantidad" type="number" formControlName="cantidad">
-      <select placeholder="unidad" formControlName="unidad">
-		    <option *ngFor="let unidad of unidades" [ngValue]="unidad.name">
-			     {{ unidad.displayName }}
-		    </option>
-	     </select>
-      <button type="button" (click)="deleteIngrediente(i)">-</button>
-      </form>
-  </div>
-</div>
-<br/>
-  <button (click)="volver()">Cancelar</button>
-  <button (click)="nuevaReceta()">Añadir</button>
+    <p *ngIf="error" style="color: red"> Debes rellenar correctamente el formulario</p>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Nombre</label>
+        <div class="col">
+            <input class="form-control" type="text" placeholder="Nombre" formControlName="nombre">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Comensales</label>
+        <div class="col">
+            <input class="form-control" type="number" placeholder="Comensales" formControlName="comensales">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Pasos</label>
+        <div class="col">
+            <input class="form-control" type="text" placeholder="Pasos" formControlName="pasos">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Alergenos</label>
+        <div class="col">
+            <select class="form-control" placeholder="alergenos" formControlName="alergenos">
+              <option *ngFor="let alergeno of alergenos" [ngValue]="alergeno.name">
+                 {{ alergeno.displayName }}
+              </option>
+             </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Imagen</label>
+        <div class="col">
+            <input class="form-control" type="text" placeholder="Imagen" formControlName="imagen">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Favorito</label>
+        <div class="col">
+            <input class="checkbox-light" type="checkbox" formControlName="favorito">
+        </div>
+    </div>
+
+    <button class="btn btn-primary mt-3 mb-2" type="button" (click)="aniadirIngrediente()">Añadir ingrediente</button>
+
+    <div formArrayName="ingredientes" *ngFor="let ingrediente of ingredientes.controls; let i = index">
+        <div [formGroupName]="i">
+            <div class="form-group row">
+                <label class="col-lg-auto col-form-label">Nombre</label>
+                <div class="col">
+                    <input class="form-control" type="text" placeholder="nombre" formControlName="nombre">
+                </div>
+                <label class="col-lg-auto col-form-label">Cantidad</label>
+                <div class="col-md-2">
+                    <input class="form-control" type="number" placeholder="cantidad" formControlName="cantidad">
+                </div>
+                <label class="col-lg-auto col-form-label">Unidad</label>
+                <div class="col">
+                    <select class="form-control" placeholder="unidad" formControlName="unidad">
+                      <option *ngFor="let unidad of unidades" [ngValue]="unidad.name">
+                         {{ unidad.displayName }}
+                      </option>
+                     </select>
+                </div>
+                <div class="col">
+                    <button class="btn btn-danger" (click)="borrarIngrediente(i)">-</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+    <br>
+    <button type="submit" class="btn btn-outline-primary" (click)="nuevaReceta()">Añadir</button>
+    <button class="btn btn-outline-primary ml-1" (click)="volver()">Cancelar</button>
+
 </form>
-
-

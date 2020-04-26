@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { RecetaService } from '../receta-service.service';
+import { RecetaService } from '../services/receta-service.service';
 import { Router } from '@angular/router';
-import { Ingrediente } from '../interfaces/ingrediente';
 
 @Component({
   selector: 'app-receta-new',
@@ -13,27 +12,35 @@ export class RecetaNewComponent implements OnInit {
 
   form: FormGroup;
   error = false;
-  unidades;
-  alergenos;
-  constructor(private service: RecetaService, private builder: FormBuilder,private router: Router) { }
+  unidades: any[] = [];
+  alergenos: any[] = [];
 
-  ngOnInit(): void {
-    this.form = this.builder.group({
-      nombre: ['',[Validators.required, Validators.minLength(2)]],
+  constructor(private service: RecetaService, private fb: FormBuilder, private router: Router) {
+    this.crearFormulario();
+    this.cargarCombos();
+  }
+
+  ngOnInit(): void { }
+
+  crearFormulario(){
+    this.form = this.fb.group({
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
       comensales: ['4', [Validators.required]],
       pasos: ['', [Validators.required]],
       alergenos: [''],
       imagen: [''],
       favorito: ['false'],
-      ingredientes: this.builder.array([])
+      ingredientes: this.fb.array([])
     });
+  }
+
+  cargarCombos(){
     this.unidades = this.service.getUnidades();
     this.alergenos = this.service.getAlergenos();
-    this.addIngrediente();
   }
 
   nuevaReceta() {
-    //alert(this.form.get('ingredientes').value[0].nombre +" "+ this.form.get('ingredientes').value[0].cantidad +" "+ this.form.get('ingredientes').value[0].unidad);
+
     if (this.form.valid) {
       const recetaNueva = {
         id: this.service.getNextId(),
@@ -59,21 +66,22 @@ export class RecetaNewComponent implements OnInit {
     this.router.navigate(['recetas']);
   }
 
-  addIngrediente(){
-    const ingrediente =  this.builder.group({
-      nombre: [''],
-      cantidad: [''],
-      unidad: ['']
+  aniadirIngrediente(){
+    const ingrediente =  this.fb.group({
+      nombre: '',
+      cantidad: '',
+      unidad: ''
     });
-    this.ingFormArray.push(ingrediente);
+    this.ingredientes.push(ingrediente);
 
   }
 
-  deleteIngrediente(id: number) {
-	  this.ingFormArray.removeAt(id);
+  borrarIngrediente(id: number) {
+    this.ingredientes.removeAt(id);
   }
 
-  get ingFormArray(): FormArray{
-	  return this.form.controls.ingredientes as FormArray;
+  get ingredientes() {
+    return this.form.get('ingredientes') as FormArray;
   }
+
 }

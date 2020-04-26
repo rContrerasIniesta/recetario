@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RecetaService } from '../receta-service.service';
+import { RecetaService } from '../services/receta-service.service';
 import { Receta } from '../interfaces/receta';
 import { Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ export class RecetaListComponent implements OnInit {
 
   listaRecetas: Receta[] = this.recetaService.getRecetas();
 
-  listaRecetasFav: Receta[] = this.listaRecetas.filter(receta=>receta.favorito);
+  listaRecetasFav: Receta[] = this.listaRecetas.filter(receta => receta.favorito);
 
   constructor(private recetaService: RecetaService, private router: Router) { }
 
@@ -22,5 +22,12 @@ export class RecetaListComponent implements OnInit {
   selected(receta: Receta) {
     console.log('seleccionado!', receta);
     this.router.navigate(['recetas', receta.id]);
+  }
+  irDetalle( id: string){
+    this.router.navigate(['recetas', id]);
+  }
+
+  borrar( id: string){
+    console.log('borrar ' + id);
   }
 }
