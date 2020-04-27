@@ -1,7 +1,7 @@
 export interface Ingrediente {
-  nombre: String;
-  cantidad: Number;
-  unidad: String;
+  nombre: string;
+  cantidad: number;
+  unidad: string;
 }
 
 export const unidades = [
@@ -14,5 +14,5 @@ export const alergenos = [
   {name: 'lacteos', displayName: 'lacteos'},
   {name: 'gluten', displayName: 'gluten'},
   {name: 'marisco', displayName: 'marisco'},
-  {name: 'no tiene', displayName: 'no tiene'}
+  {name: 'frutos secos', displayName: 'frutos secos'}
 ];

@@ -81,6 +81,13 @@ export class RecetaService {
     const maximo = Math.max.apply(null, numbers);
     return maximo + 1;
   }
+
+  actualizarReceta(receta: Receta){
+    let pos = 0;
+    pos = this.recetas.findIndex(valor => valor.id === receta.id);
+    this.recetas.splice(pos, 1, receta);
+
+  }
 }
 
 

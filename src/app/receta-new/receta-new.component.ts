@@ -14,6 +14,7 @@ export class RecetaNewComponent implements OnInit {
   error = false;
   unidades: any[] = [];
   alergenos: any[] = [];
+  alergenosSelected: any[] = [];
 
   constructor(private service: RecetaService, private fb: FormBuilder, private router: Router) {
     this.crearFormulario();
@@ -47,7 +48,7 @@ export class RecetaNewComponent implements OnInit {
         nombre: this.form.get('nombre').value,
         comensales: this.form.get('comensales').value,
         pasos: this.form.get('pasos').value,
-        alergenos: this.form.get('alergenos').value,
+        alergenos: this.alergenosSelected,
         imagen: this.form.get('imagen').value,
         favorito: this.form.get('favorito').value,
         ingredientes: this.form.get('ingredientes').value
@@ -57,6 +58,13 @@ export class RecetaNewComponent implements OnInit {
       this.form.reset();
       this.router.navigate(['recetas']);
     } else {
+      Object.values(this.form.controls).forEach( control => {
+        if (control instanceof FormArray){
+          Object.values(control.controls).forEach( con => con.markAsTouched());
+        } else{
+          control.markAsTouched();
+        }
+      });
       this.error = true;
     }
   }
@@ -68,7 +76,7 @@ export class RecetaNewComponent implements OnInit {
 
   aniadirIngrediente(){
     const ingrediente =  this.fb.group({
-      nombre: '',
+      nombre: ['', Validators.required],
       cantidad: '',
       unidad: ''
     });
@@ -84,4 +92,28 @@ export class RecetaNewComponent implements OnInit {
     return this.form.get('ingredientes') as FormArray;
   }
 
+  aniadirAlergeno(){
+    const seleccionado = this.form.get('alergenos').value;
+    if (this.alergenosSelected.find( alergeno => seleccionado === alergeno)){
+      return;
+    }
+
+    this.alergenosSelected.push(seleccionado);
+  }
+
+  get nombreNoValido(){
+    return this.form.get('nombre').invalid && this.form.get('nombre').touched;
+  }
+
+  get pasosNoValido(){
+    return this.form.get('pasos').invalid && this.form.get('pasos').touched;
+  }
+
+  get comensalesNoValido(){
+    return (this.form.get('comensales').value > 0) ? false : true;
+  }
+
+  get ingredienteNoValido(){
+    return this.form.get('ingredientes').invalid && this.form.get('ingredientes').touched;
+  }
 }

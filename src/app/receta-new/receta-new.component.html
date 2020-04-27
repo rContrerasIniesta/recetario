@@ -6,41 +6,38 @@
 
     <div class="form-group row">
         <label class="col-2 col-form-label">Nombre</label>
-        <div class="col">
-            <input class="form-control" type="text" placeholder="Nombre" formControlName="nombre">
+        <div class="col-md-3">
+            <input class="form-control" type="text" placeholder="Nombre" formControlName="nombre" [class.is-invalid]="nombreNoValido">
+            <small *ngIf="nombreNoValido" class="text-danger">El nombre es obligatorio</small>
         </div>
     </div>
 
     <div class="form-group row">
         <label class="col-2 col-form-label">Comensales</label>
-        <div class="col">
-            <input class="form-control" type="number" placeholder="Comensales" formControlName="comensales">
+        <div class="col-md-3">
+            <input class="form-control" type="number" placeholder="Comensales" formControlName="comensales" [class.is-invalid]="comensalesNoValido">
+            <small *ngIf="comensalesNoValido" class="text-danger">El numero de comensales tiene que ser mayor que 0</small>
         </div>
     </div>
 
     <div class="form-group row">
         <label class="col-2 col-form-label">Pasos</label>
         <div class="col">
-            <input class="form-control" type="text" placeholder="Pasos" formControlName="pasos">
+            <textarea class="form-control" type="text" placeholder="Pasos" formControlName="pasos" [class.is-invalid]="pasosNoValido"></textarea>
+            <small *ngIf="pasosNoValido" class="text-danger">El campo pasos es obligatorio</small>
         </div>
     </div>
 
     <div class="form-group row">
         <label class="col-2 col-form-label">Alergenos</label>
-        <div class="col">
+        <div class="col-md-3">
             <select class="form-control" placeholder="alergenos" formControlName="alergenos">
               <option *ngFor="let alergeno of alergenos" [ngValue]="alergeno.name">
                  {{ alergeno.displayName }}
               </option>
              </select>
         </div>
-    </div>
-
-    <div class="form-group row">
-        <label class="col-2 col-form-label">Imagen</label>
-        <div class="col">
-            <input class="form-control" type="text" placeholder="Imagen" formControlName="imagen">
-        </div>
+        <div class="col-lg-auto"><button class="btn btn-dark" (click)="aniadirAlergeno()">+</button></div>
     </div>
 
     <div class="form-group row">
@@ -56,8 +53,9 @@
         <div [formGroupName]="i">
             <div class="form-group row">
                 <label class="col-lg-auto col-form-label">Nombre</label>
-                <div class="col">
-                    <input class="form-control" type="text" placeholder="nombre" formControlName="nombre">
+                <div class="col-md-2">
+                    <input class="form-control" type="text" placeholder="nombre" formControlName="nombre" [class.is-invalid]="ingredienteNoValido">
+                    <small *ngIf="ingredienteNoValido" class="text-danger">El nombre del ingrediente es obligatorio</small>
                 </div>
                 <label class="col-lg-auto col-form-label">Cantidad</label>
                 <div class="col-md-2">
@@ -76,7 +74,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <br>
